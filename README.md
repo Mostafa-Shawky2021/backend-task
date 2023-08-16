@@ -24,7 +24,6 @@ composer install
 -   Generate application key
 
 ```
-
 php artisan key:generate
 
 ```
@@ -52,12 +51,15 @@ php artisan db:seed
 
 npm install
 npm run dev
+```
 
 -   Serve the application
 
 ```
 
 php artisan serve
+
+```
 
 ```
 
