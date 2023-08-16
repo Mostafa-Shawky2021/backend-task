@@ -11,7 +11,7 @@
 -   clone the repository
 
 ```
-git clone https://github.com/Mostafa-Shawky2021/backend-task project-app
+git clone https://github.com/Mostafa-Shawky2021/backend-task project-app && cd project-app
 ```
 
 -   install composer dependencies
