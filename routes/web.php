@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +17,8 @@ use App\Http\Controllers\CompanyController;
 
 Route::redirect('/', '/companies');
 
-Route::resource('companies', CompanyController::class);
+Route::resources([
+    'companies' => CompanyController::class,
+    'employees' => EmployeeController::class,
+
+]);

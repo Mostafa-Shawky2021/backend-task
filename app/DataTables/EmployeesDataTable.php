@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Company;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CompaniesDataTable extends DataTable
+class EmployeesDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,19 +23,20 @@ class CompaniesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('company_name', fn ($company) => $company->company_name)
-            ->addColumn('company_address', fn ($company) => $company->company_address)
-            ->addColumn('company_logo', function ($company) {
-                if ($company->company_logo) return "<img src='" . $company->company_logo . "'/>";
-                return "No Logo available";
-            })->rawColumns(['company_logo'])
-            ->addColumn('created_at', fn ($company) => $company->created_at->format('Y-m-d H:i'));
+            ->addColumn('employee_name', fn ($employee) => $employee->employee_name)
+            ->addColumn('employee_email', fn ($employee) => $employee->employee_email)
+            ->addColumn('employee_company', fn ($employee) => $employee->company->company_name)
+            ->addColumn('employee_image', function ($employee) {
+                if ($employee->employee_image) return "<img src='" . $employee->employee_image . "'/>";
+                return "No Image available";
+            })->rawColumns(['employee_image'])
+            ->addColumn('created_at', fn ($employee) => $employee->created_at->format('Y-m-d H:i'));
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Company $model): QueryBuilder
+    public function query(Employee $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -46,7 +47,7 @@ class CompaniesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('companies-table')
+            ->setTableId('employees-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('frtip')
@@ -62,10 +63,11 @@ class CompaniesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('company_name'),
-            Column::make('company_address'),
-            Column::make('company_logo'),
-            Column::make('created_at')
+            Column::make('id'),
+            Column::make('employee_name'),
+            Column::make('employee_email'),
+            Column::make('employee_image'),
+            Column::make('created_at'),
         ];
     }
 
@@ -74,6 +76,6 @@ class CompaniesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Companies_' . date('YmdHis');
+        return 'Employees_' . date('YmdHis');
     }
 }
