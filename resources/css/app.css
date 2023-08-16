@@ -1,0 +1,13 @@
+@import 'bootstrap/dist/css/bootstrap.min'; 
+
+.layout-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.error {
+    color: var(--bs-danger);
+    vertical-align: middle;
+    
+}
