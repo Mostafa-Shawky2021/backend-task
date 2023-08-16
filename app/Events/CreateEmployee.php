@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Employee;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -17,9 +18,10 @@ class CreateEmployee
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public Employee $employee)
     {
-        //
+            //
+        ;
     }
 
     /**

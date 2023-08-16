@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\EmployeesDataTable;
+use App\Events\CreateEmployee;
 use App\Http\Requests\StoreEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
@@ -48,10 +48,13 @@ class EmployeeController extends Controller
             $validatedInput['employee_image'] = $imagePath;
         }
 
-        $isSaved = Employee::create($validatedInput->all());
+        $employee = Employee::create($validatedInput->all());
 
-        if ($isSaved) return redirect()->route('employees.index')
-            ->with('message', [self::SUCCESS, 'employee saved successfully']);
+        if ($employee) {
+            event(new CreateEmployee($employee));
+            return redirect()->route('employees.index')
+                ->with('message', [self::SUCCESS, 'employee saved successfully']);
+        }
 
         return redirect()->route('employees.index')
             ->with('message', [self::ERROR, 'Error with saving employee try again ... ']);

@@ -17,6 +17,7 @@
 }
 .datatable {
     width: 100% !important;
+
 }
 .datatable .action-wrapper {
     display: flex;
@@ -52,4 +53,8 @@ td {
 
 .dropdown-filter {
     width: 240px;
+}
+
+.navbar .active, .navbar a:hover {
+    color: var(--bs-primary) !important;
 }

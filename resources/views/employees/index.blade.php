@@ -1,11 +1,14 @@
 @extends('layout.app')
 @section('content')
     @include('shared.messages')
-    <div class="card">
+    <div class="text-center text-md-start">
+        <a class="btn btn-primary btn-sm" href="{{ route('employees.create') }}">Add Employee</a>
+    </div>
+    <div class="card mt-3">
         <div class="card-header">Employees Data</div>
         <div class="card-body">
             <div class='table-responsive mt-3 position-relative'>
-                <div class="d-flex align-items-center gap-3">
+                <div class="mb-4 d-flex flex-column flex-md-row align-items-center gap-3">
                     @php $companyId = request()->query('company') ;@endphp
                     <select class='form-select dropdown-filter' id="dropdownFilter">
                         <option value="0">choose company</option>
@@ -14,8 +17,10 @@
                             </option>
                         @endforeach
                     </select>
-                    <button id="applyFilterBtn"class='btn btn-primary btn-sm'>Apply filter</button>
-                    <button class='btn btn-primary btn-sm' id="removeFilterBtn">remove filter</button>
+                    <div class="d-flex gap-2">
+                        <button id="applyFilterBtn"class='btn btn-primary btn-sm'>Apply filter</button>
+                        <button class='btn btn-primary btn-sm' id="removeFilterBtn">remove filter</button>
+                    </div>
 
                 </div>
                 {{ $dataTable->table(['class' => 'datatable']) }}

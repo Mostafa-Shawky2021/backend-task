@@ -2,18 +2,16 @@
 
 namespace App\Listeners;
 
+use App\Mail\WelcomeMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
-class SendWelcomeMessage
+class SendWelcomeMessage implements ShouldQueue
 {
     /**
      * Create the event listener.
      */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
@@ -21,5 +19,7 @@ class SendWelcomeMessage
     public function handle(object $event): void
     {
         //
+        Mail::to($event->employee->employee_email)
+            ->send(new WelcomeMessage($event->employee));
     }
 }

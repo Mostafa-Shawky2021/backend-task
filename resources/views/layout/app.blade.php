@@ -15,7 +15,8 @@
 
 </head>
 
-<body>
+<body class="pt-5">
+    @include('shared.header')
     <div class="container-xl mt-5">
         @yield('content')
     </div>
