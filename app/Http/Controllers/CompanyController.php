@@ -14,6 +14,9 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
+    const ERROR = 'danger';
+    const SUCCESS = 'success';
+
     public function index(CompaniesDataTable $dataTable)
     {
         //
@@ -41,7 +44,11 @@ class CompanyController extends Controller
             $validatedInput['company_logo'] = $logoPath;
         }
 
-        Company::create($validatedInput->all());
+        $isSaved = Company::create($validatedInput->all());
+        if ($isSaved) return redirect()->route('companies.index')
+            ->with('message', [self::SUCCESS, 'company saved successfully']);
+        return redirect()->route('companies.index')
+            ->with('message', [self::ERROR, 'Error with updating company try again ... ']);
     }
 
     /**
@@ -75,11 +82,11 @@ class CompanyController extends Controller
         }
         $isUpdated = $company->update($validatedInput->all());
         if ($isUpdated) return redirect()->route('companies.index')
-            ->with('message', ['success', 'company updated successfully']);
+            ->with('message', [self::SUCCESS, 'company updated successfully']);
 
         return redirect()
             ->route('companies.index')
-            ->with('message', ['danger', 'Error with updating company try again ... ']);
+            ->with('message', [self::ERROR, 'Error with updating company try again ... ']);
     }
 
     /**
@@ -88,5 +95,17 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         //
+        $companyLogo = $company->company_logo;
+
+        ($companyLogo && Storage::exists($companyLogo))
+            ? Storage::delete($company->compay_logo)
+            : null;
+
+        if ($company->delete()) return redirect()
+            ->route('companies.index')
+            ->with('message', [self::SUCCESS, 'Company Deleted successfully']);
+        return response()
+            ->route('companies.index')
+            ->with('message', [self::ERROR, 'Error with deleting company try again ... ']);
     }
 }
