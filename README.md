@@ -38,7 +38,7 @@ php artisan key:generate
 php artisan storage:link
 ```
 
--   Migrate database migrations file
+-   Migrate database , make sure you configure database source and credentials
 
 ```
 php artisan migrate
@@ -48,8 +48,7 @@ php artisan db:seed
 -   install npm dependencies
 
 ```
-npm install
-npm run dev
+npm install && npm run dev
 ```
 
 -   Serve the application
