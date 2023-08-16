@@ -66,6 +66,7 @@ class EmployeesDataTable extends DataTable
             Column::make('id'),
             Column::make('employee_name'),
             Column::make('employee_email'),
+            Column::make('employee_company'),
             Column::make('employee_image'),
             Column::make('created_at'),
         ];

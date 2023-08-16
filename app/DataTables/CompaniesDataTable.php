@@ -23,13 +23,31 @@ class CompaniesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('company_name', fn ($company) => $company->company_name)
-            ->addColumn('company_address', fn ($company) => $company->company_address)
-            ->addColumn('company_logo', function ($company) {
+            ->addColumn('company_name', fn (Company $company) => $company->company_name)
+            ->addColumn('company_address', fn (Company $company) => $company->company_address)
+            ->addColumn('company_logo', function (Company $company) {
                 if ($company->company_logo) return "<img src='" . $company->company_logo . "'/>";
                 return "No Logo available";
-            })->rawColumns(['company_logo'])
-            ->addColumn('created_at', fn ($company) => $company->created_at->format('Y-m-d H:i'));
+            })->addColumn(
+                'created_at',
+                fn ($company) => $company->created_at->format('Y-m-d H:i')
+            )->addColumn('action', function (Company $company) {
+                $routeParamter = ['company' => $company->id];
+                $btn =
+                    '<div class="action-wrapper">
+                        <a class="btn-action" href=' . route('companies.edit', $routeParamter) . '>
+                        <i class="fa fa-edit icon icon-edit"></i>
+                        </a>
+                    <form method="POST" action="' . route('companies.destroy', $routeParamter) . '"}}>
+                        ' . method_field('DELETE') . '
+                        ' . csrf_field() . '
+                            <button class="btn-action" onclick="return confirm(\'هل انت متاكد؟\')">
+                                <i class="fa fa-trash icon icon-delete"></i>
+                        </button>
+                    </form>
+                </div>';
+                return $btn;
+            })->rawColumns(['company_logo', 'action']);
     }
 
     /**
@@ -49,7 +67,7 @@ class CompaniesDataTable extends DataTable
             ->setTableId('companies-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('frtip')
+            ->dom('rtip')
             ->parameters([
                 'order' => [0, 'desc']
             ])
@@ -62,10 +80,13 @@ class CompaniesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('DT_RowId')->title('num')->name('id'),
             Column::make('company_name'),
             Column::make('company_address'),
             Column::make('company_logo'),
-            Column::make('created_at')
+            Column::make('created_at'),
+            Column::make('action'),
+
         ];
     }
 

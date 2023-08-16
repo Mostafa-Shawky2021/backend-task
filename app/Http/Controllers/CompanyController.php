@@ -7,6 +7,7 @@ use App\Models\Company;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\DataTables\CompaniesDataTable;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -56,15 +57,29 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        return view('companies.edit', compact('company'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Company $company)
+    public function update(StoreCompanyRequest $request, Company $company)
     {
-        //
+        $validatedInput = $request->safe();
+        if ($request->has('company_logo')) {
+            $logoPath = $request->file('company_logo')->store('public/company');
+            $validatedInput['company_logo'] = $logoPath;
+            Storage::exists($company->company_logo)
+                ? Storage::delete($company->company_path)
+                : null;
+        }
+        $isUpdated = $company->update($validatedInput->all());
+        if ($isUpdated) return redirect()->route('companies.index')
+            ->with('message', ['success', 'company updated successfully']);
+
+        return redirect()
+            ->route('companies.index')
+            ->with('message', ['danger', 'Error with updating company try again ... ']);
     }
 
     /**
