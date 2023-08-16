@@ -1,9 +1,9 @@
-@import 'bootstrap/dist/css/bootstrap.min'; 
-@import 'bootstrap-icons/font/bootstrap-icons';
+@import "bootstrap/dist/css/bootstrap.min";
+@import "bootstrap-icons/font/bootstrap-icons";
 @import "datatables.net-bs5/css/dataTables.bootstrap5.min";
 @import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min";
-@import 'datatables.net-select-bs5/css/select.bootstrap5';
-@import '@fortawesome/fontawesome-free/css/all.min';
+@import "datatables.net-select-bs5/css/select.bootstrap5";
+@import "@fortawesome/fontawesome-free/css/all.min";
 
 .form {
     max-width: 800px;
@@ -14,15 +14,16 @@
 .error {
     color: var(--bs-danger);
     vertical-align: middle;
-
 }
-.datatable  .action-wrapper {
-display: flex;
+.datatable {
+    width: 100% !important;
+}
+.datatable .action-wrapper {
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 15px;
 }
-
 
 .datatable .action-wrapper .btn-action {
     border: none;
@@ -36,13 +37,14 @@ display: flex;
 .datatable .action-wrapper .icon-delete {
     color: var(--bs-danger);
 }
-.datatable th,td {
+.datatable th,
+td {
     text-align: center !important;
     font-size: 0.9rem;
+    vertical-align: middle;
 }
 .datatable th {
     color: var(--bs-gray-700);
-       
 }
 .datatable td {
     color: var(--bs-gray-600);

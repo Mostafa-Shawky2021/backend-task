@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container-xl mt-5">
         @yield('content')
     </div>
 

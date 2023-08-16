@@ -26,7 +26,14 @@ class CompaniesDataTable extends DataTable
             ->addColumn('company_name', fn (Company $company) => $company->company_name)
             ->addColumn('company_address', fn (Company $company) => $company->company_address)
             ->addColumn('company_logo', function (Company $company) {
-                if ($company->company_logo) return "<img src='" . $company->company_logo . "'/>";
+                if ($company->company_logo) {
+                    return "<img
+                                width='45'
+                                height='45'
+                                class='rounded'
+                                src='" . asset('storage/' . $company->company_logo) . "'/>";
+                }
+
                 return "No Logo available";
             })->addColumn(
                 'created_at',
@@ -67,7 +74,7 @@ class CompaniesDataTable extends DataTable
             ->setTableId('companies-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('frtip')
+            ->dom('rtip')
             ->parameters([
                 'order' => [0, 'desc']
             ])

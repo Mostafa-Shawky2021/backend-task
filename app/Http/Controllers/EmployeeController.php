@@ -75,17 +75,13 @@ class EmployeeController extends Controller
 
         if ($request->has('employee_image')) {
 
-            $imagePath = $request->file('employee_image')->store('public/employee');
+            $imagePath = $request->file('employee_image')->store('employee', 'public');
             $validatedInput['employee_image'] = $imagePath;
 
-            $imagePath = $employee->employee_image;
+            $oldImagePath = $employee->employee_image;
 
-            ($imagePath && Storage::exists($employee->employee_image))
-                ? Storage::delete($employee->employee_image)
-                : null;
-
-            Storage::exists($employee->employee_image)
-                ? Storage::delete($employee->employee_image)
+            ($oldImagePath && Storage::disk('public')->exists($oldImagePath))
+                ? Storage::disk('public')->delete($oldImagePath)
                 : null;
         }
 

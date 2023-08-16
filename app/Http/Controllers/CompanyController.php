@@ -40,7 +40,7 @@ class CompanyController extends Controller
         //  
         $validatedInput = $request->safe();
         if ($request->has('company_logo')) {
-            $logoPath = $request->file('company_logo')->store('public/company');
+            $logoPath = $request->file('company_logo')->store('company', 'public');
             $validatedInput['company_logo'] = $logoPath;
         }
 
@@ -51,14 +51,6 @@ class CompanyController extends Controller
 
         return redirect()->route('companies.index')
             ->with('message', [self::ERROR, 'Error with saving company try again ... ']);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Company $company)
-    {
-        //
     }
 
     /**
@@ -75,11 +67,14 @@ class CompanyController extends Controller
     public function update(StoreCompanyRequest $request, Company $company)
     {
         $validatedInput = $request->safe();
+
         if ($request->has('company_logo')) {
-            $logoPath = $request->file('company_logo')->store('public/company');
+            $logoPath = $request->file('company_logo')->store('company', 'public');
             $validatedInput['company_logo'] = $logoPath;
-            Storage::exists($company->company_logo)
-                ? Storage::delete($company->company_path)
+
+            $oldImagePath = $company->company_logo;
+            $oldImagePath && Storage::disk('public')->exists($oldImagePath)
+                ? Storage::disk('public')->delete($oldImagePath)
                 : null;
         }
         $isUpdated = $company->update($validatedInput->all());
@@ -99,13 +94,14 @@ class CompanyController extends Controller
         //
         $companyLogo = $company->company_logo;
 
-        ($companyLogo && Storage::exists($companyLogo))
-            ? Storage::delete($company->compay_logo)
+        ($companyLogo && Storage::disk('public')->exists($companyLogo))
+            ? Storage::disk('public')->delete($companyLogo)
             : null;
 
-        if ($company->delete()) return redirect()
-            ->route('companies.index')
-            ->with('message', [self::SUCCESS, 'Company Deleted successfully']);
+        if ($company->delete())
+            return redirect()->route('companies.index')
+                ->with('message', [self::SUCCESS, 'Company Deleted successfully']);
+
         return response()
             ->route('companies.index')
             ->with('message', [self::ERROR, 'Error with deleting company try again ... ']);

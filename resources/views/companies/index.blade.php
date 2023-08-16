@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">Companies Data</div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive mt-2">
                 {{ $dataTable->table(['class' => 'datatable']) }}
             </div>
         </div>
