@@ -62,6 +62,7 @@ class CompaniesDataTable extends DataTable
      */
     public function query(Company $model): QueryBuilder
     {
+
         return $model->newQuery();
     }
 

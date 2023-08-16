@@ -20,7 +20,8 @@ class EmployeeController extends Controller
     public function index(EmployeesDataTable $dataTable)
     {
         //
-        return $dataTable->render('employees.index');
+        $companies = Company::all();
+        return $dataTable->render('employees.index', compact('companies'));
     }
 
     /**

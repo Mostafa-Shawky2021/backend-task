@@ -49,3 +49,7 @@ td {
 .datatable td {
     color: var(--bs-gray-600);
 }
+
+.dropdown-filter {
+    width: 240px;
+}

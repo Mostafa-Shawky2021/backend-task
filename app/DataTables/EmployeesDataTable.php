@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -21,6 +22,7 @@ class EmployeesDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+
         return (new EloquentDataTable($query))
             ->setRowId('id')
             ->addColumn('employee_name', fn (Employee $employee) => $employee->employee_name)
@@ -63,6 +65,11 @@ class EmployeesDataTable extends DataTable
      */
     public function query(Employee $model): QueryBuilder
     {
+        if (request()->has('company')) {
+            $categoryId = request()->query('company');
+            $filter = $model->where('company_id', $categoryId);
+            return $filter;
+        }
         return $model->newQuery();
     }
 
@@ -71,6 +78,7 @@ class EmployeesDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
+
         return $this->builder()
             ->setTableId('employees-table')
             ->columns($this->getColumns())
