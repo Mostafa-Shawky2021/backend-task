@@ -12,7 +12,6 @@
 
 ```
 git clone https://github.com/Mostafa-Shawky2021/backend-task project-app
-
 ```
 
 -   install composer dependencies
@@ -25,30 +24,24 @@ composer install
 
 ```
 php artisan key:generate
-
 ```
 
 -   Create Symbolic link for image storage
 
 ```
-
 php artisan storage:link
-
 ```
 
 -   Migrate database migrations file
 
 ```
-
 php artisan migrate
 php artisan db:seed
-
 ```
 
 -   install npm dependencies
 
 ```
-
 npm install
 npm run dev
 ```
@@ -56,11 +49,5 @@ npm run dev
 -   Serve the application
 
 ```
-
 php artisan serve
-
-```
-
-```
-
 ```
