@@ -20,6 +20,12 @@ git clone https://github.com/Mostafa-Shawky2021/backend-task project-app && cd p
 composer install
 ```
 
+-   Config env variables and database credentials
+
+```
+mv .env.example .env
+```
+
 -   Generate application key
 
 ```
