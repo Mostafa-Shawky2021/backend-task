@@ -67,7 +67,7 @@ class CompaniesDataTable extends DataTable
             ->setTableId('companies-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('rtip')
+            ->dom('frtip')
             ->parameters([
                 'order' => [0, 'desc']
             ])

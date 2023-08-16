@@ -7,7 +7,7 @@
         @method('PUT')
         @include('companies.form', ['company' => $company])
         <div class="mt-4">
-            <button class="btn btn-primary">Add Company</button>
+            <button class="btn btn-primary">Edit Company</button>
         </div>
     </form>
 @endsection

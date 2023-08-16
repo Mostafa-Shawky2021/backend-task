@@ -23,14 +23,39 @@ class EmployeesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('employee_name', fn ($employee) => $employee->employee_name)
-            ->addColumn('employee_email', fn ($employee) => $employee->employee_email)
-            ->addColumn('employee_company', fn ($employee) => $employee->company->company_name)
-            ->addColumn('employee_image', function ($employee) {
-                if ($employee->employee_image) return "<img src='" . $employee->employee_image . "'/>";
+            ->addColumn('employee_name', fn (Employee $employee) => $employee->employee_name)
+            ->addColumn('employee_email', fn (Employee $employee) => $employee->employee_email)
+            ->addColumn('employee_company', fn (Employee $employee) => $employee->company->company_name)
+            ->addColumn('employee_image', function (Employee $employee) {
+                if ($employee->employee_image) {
+                    return "<img 
+                                width='45'
+                                height='45'
+                                class='rounded' 
+                                src='" . asset('storage/' . $employee->employee_image) . "'/>";
+                }
+
                 return "No Image available";
-            })->rawColumns(['employee_image'])
-            ->addColumn('created_at', fn ($employee) => $employee->created_at->format('Y-m-d H:i'));
+            })->addColumn('action', function (Employee $employee) {
+                $routeParamter = ['employee' => $employee->id];
+                $btn =
+                    '<div class="action-wrapper">
+                        <a class="btn-action" href=' . route('employees.edit', $routeParamter) . '>
+                        <i class="fa fa-edit icon icon-edit"></i>
+                        </a>
+                    <form method="POST" action="' . route('employees.destroy', $routeParamter) . '"}}>
+                        ' . method_field('DELETE') . '
+                        ' . csrf_field() . '
+                            <button class="btn-action" onclick="return confirm(\'هل انت متاكد؟\')">
+                                <i class="fa fa-trash icon icon-delete"></i>
+                        </button>
+                    </form>
+                </div>';
+                return $btn;
+            })->addColumn(
+                'created_at',
+                fn ($company) => $company->created_at->format('Y-m-d H:i')
+            )->rawColumns(['employee_image', 'action']);
     }
 
     /**
@@ -50,7 +75,7 @@ class EmployeesDataTable extends DataTable
             ->setTableId('employees-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('frtip')
+            ->dom('rtip')
             ->parameters([
                 'order' => [0, 'desc']
             ])
@@ -69,6 +94,8 @@ class EmployeesDataTable extends DataTable
             Column::make('employee_company'),
             Column::make('employee_image'),
             Column::make('created_at'),
+            Column::make('action'),
+
         ];
     }
 

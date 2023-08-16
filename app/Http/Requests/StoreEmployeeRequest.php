@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreEmployeeRequest extends FormRequest
 {
@@ -21,12 +22,20 @@ class StoreEmployeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $employee =  $this->route('employee');
+
+        $validationRule = [
             'employee_name' => 'required|min:4',
-            'employee_email' => 'required|email',
-            'employee_password' => 'required|min:4',
+            'employee_email' => [
+                Rule::unique('employees')->ignore($employee->id ?? null), 'required', 'email'
+            ],
             'company_id' => 'required',
             'employee_image' => 'sometimes|image'
         ];
+
+        if (!request()->filled('old_password') || request()->filled('employee_password'))
+            $validationRule['employee_password'] = 'required|min:4';
+
+        return $validationRule;
     }
 }

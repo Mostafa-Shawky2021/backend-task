@@ -45,10 +45,12 @@ class CompanyController extends Controller
         }
 
         $isSaved = Company::create($validatedInput->all());
+
         if ($isSaved) return redirect()->route('companies.index')
             ->with('message', [self::SUCCESS, 'company saved successfully']);
+
         return redirect()->route('companies.index')
-            ->with('message', [self::ERROR, 'Error with updating company try again ... ']);
+            ->with('message', [self::ERROR, 'Error with saving company try again ... ']);
     }
 
     /**
