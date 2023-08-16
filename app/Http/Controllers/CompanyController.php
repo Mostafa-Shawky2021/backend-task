@@ -6,15 +6,17 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use App\DataTables\CompaniesDataTable;
 
 class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(CompaniesDataTable $dataTable)
     {
         //
+        return $dataTable->render('companies.index');
     }
 
     /**
@@ -23,7 +25,7 @@ class CompanyController extends Controller
     public function create()
     {
         //
-        return view('company.create');
+        return view('companies.create');
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <form method="post" enctype="multipart/form-data" action="{{ route('companies.store') }}">
+    <form method="post" class="form" enctype="multipart/form-data" action="{{ route('companies.store') }}">
         <h3 class="text-center">Add Company</h3>
         @csrf
         @include('shared.errors')

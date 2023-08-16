@@ -1,6 +1,11 @@
 @import 'bootstrap/dist/css/bootstrap.min'; 
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
+@import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css";
+@import 'datatables.net-select-bs5/css/select.bootstrap5.css';
 
-.layout-container {
+
+.form {
     max-width: 800px;
     margin: 50px auto;
     padding-right: 15px;
@@ -9,5 +14,5 @@
 .error {
     color: var(--bs-danger);
     vertical-align: middle;
-    
+
 }
