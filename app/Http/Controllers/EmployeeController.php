@@ -106,8 +106,8 @@ class EmployeeController extends Controller
         //
         $employeeImagePath = $employee->employee_image;
 
-        ($employeeImagePath && Storage::exists($employeeImagePath))
-            ? Storage::delete($company->employee_image)
+        ($employeeImagePath && Storage::disk('public')->exists($employeeImagePath))
+            ? Storage::disk('public')->delete($employeeImagePath)
             : null;
 
         if ($employee->delete()) return redirect()
